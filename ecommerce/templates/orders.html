@@ -1,0 +1,36 @@
+{% extends "./components/basic.html" %}
+
+
+{% block title %}
+Orders
+{% endblock  %}
+
+
+{% block body %}
+
+
+<div class= "flex flex-col p-[20px] gap-[20px]">
+    {% for pdata in productdata  %}
+    
+       {% for data in pdata %}
+       
+       <div class="h-[5cm]  flex items-center gap-[20px]">
+        <img src="../../media/{{ data.product_image }}" class="w-auto h-full"  alt="">
+        <div class="flex-col w-[10cm] gap-[4px]"> 
+
+            <h1>{{ data.product_name }}</h1>
+            <p>{{ data.product_desc|slice:":50" }}</p>
+            <p>{{ data.product_price }}</p>
+            <p>Orderd WIthin 2days</p>
+        </div>
+    </div>
+       
+       {% endfor %}
+    
+    {% endfor %}
+</div>
+
+
+
+{% endblock  %}
+

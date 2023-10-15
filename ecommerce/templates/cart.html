@@ -1,0 +1,100 @@
+{% extends "./components/basic.html" %}
+
+
+{% block title %}
+Cart
+{% endblock  %}
+
+
+{% block body %}
+{% if cartdata %}
+
+
+{% if messages %}
+
+ {% for message in messages  %}
+ 
+ <ul class="messages">
+  {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+ {% endfor %}
+
+{% endif %}
+<div class="flex w-full justify-between p-[20px]">
+    <div class="flex flex-col  gap-[20px]">
+       {% for i in productdata %}
+            
+         {% for items in i %}
+         
+        <div class="h-[5cm]  flex justify-between gap-[20px]">
+            <img src="../../media/{{ items.product_image }}" class="w-auto h-full"  alt="">
+            <div class="flex-col w-[10cm]"> 
+
+                <h1>{{ items.product_name }}</h1>
+                <p>{{ items.product_desc|slice:":50" }}</p>
+                <p>{{ items.product_price }}</p>
+            </div>
+        </div>
+         {% endfor %}
+       
+       {% endfor %}
+    </div>
+
+
+    <div class="flex flex-col  gap-[10px]">
+
+      {% for i in cartdata %}
+      <div class="h-[5cm]">
+
+          <p>Quantity{{ i.quantity }}</p>
+          <div class="flex gap-[10px]">
+            <form action="/cartupdateadd/{{ i.id }}/">
+
+              <button id="{{ i.id }}">+</button>
+            </form>
+            <form action="/cartdel/{{ i.id }}/">
+
+              <button type="submit"><img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/filled-trash.png" alt="filled-trash"/></button>
+            </form>
+            <form action="/cartupdateremove/{{ i.id }}/">
+
+              <button>-</button>
+            </form>
+          </div>
+        </div>
+      
+      {% endfor %}
+    </div>
+</div>
+
+<div align="right" class="text-crimson">
+
+  <p>Total: {{ totalprice }}</p>
+</div>
+
+<div class="p-[10px] w-full flex items-center justify-center">
+
+  {% if cartdata %}
+  <a href="/info" class="text-white bg-[crimson] flex items-center justify-center rounded-full w-full p-[5px]">Buy</a>
+  {% endif %}
+  </div>
+
+  {% else %}
+  <p>No items in Cart</p>
+  
+  {% endif %}
+
+{% endblock  %}
+
+
+{% block js %}
+
+<script>
+  setTimeout(function() {
+      document.querySelector('.messages').style.display = 'none';
+  }, 5000); 
+</script>
+
+{% endblock  %}

@@ -1,0 +1,31 @@
+{% extends "./components/basic.html" %}
+
+{% block body %}
+<div class="w-full flex items-center justify-center flex-col gap-[20px]">
+
+        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Products</h1>
+        <div class=" flex items-center justify-center">
+            <div class="grid grid-cols-4 gap-[20px] overflow-x-auto">
+            {% for product in data %}
+                    <a href="/productview/{{ product.id }}">
+                        <div class="flex w-[7cm] h-[5cm] flex-col">
+
+                            <img src="../../media/{{ product.product_image }}" class="w-full h-[70%] object-cover object-center" alt="">
+                            <div class="flex justify-between items-center gap-[10px] p-[10px] h-[30%]">
+                                <p>{{ product.product_name }}</p>
+                                <p class="text-[crimson]">{{ product.product_price }}</p>
+                              </div>
+                        </div>
+                    </a> 
+            {% endfor %}
+                   
+                    
+                
+            </div>
+        
+        </div>
+        
+</div>
+
+
+{% endblock  %}

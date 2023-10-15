@@ -1,0 +1,27 @@
+{% load static %}
+
+<div class="w-full flex items-center justify-center flex-col gap-[20px]">
+
+        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Top Categories</h1>
+        <div class=" flex items-center justify-center">
+            <div class="grid grid-cols-4 gap-[20px] overflow-x-auto">
+            {% for product in products %}
+                    <a href="products/{{  product.poduct_cat_type }}">
+                        <div class="flex w-[7cm] h-[5cm] flex-col">
+
+                            <img src="../../../media/{{ product.producT_cat_image }}" class="w-full h-[70%] object-cover object-center" alt="">
+                            <div class="flex flex-col gap-[10px] p-[10px]">
+                                <p>{{ product.poduct_cat_type }}</p>
+                            </div>
+                        </div>
+                    </a> 
+            {% endfor %}
+                   
+                    
+                
+            </div>
+        
+        </div>
+        <a href="/" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">More</a>
+
+</div>

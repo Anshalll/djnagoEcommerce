@@ -1,0 +1,86 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+    <style>
+        .w3-container {
+            font-size: 14px;
+        }
+
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <div class="center">
+        <h3 class="donate">
+            <div class="w3-card-4">
+
+                <header class="w3-container w3-blue">
+                    <h1>DONATE</h1>
+                </header>
+
+                <div class="w3-container">
+                    <p>Donate for a great cause. Be a hero.</p>
+
+                    <!-- PAYPAL BUTTONS HERE  -->
+
+                    <div id="paypal-button-container"></div>
+
+                    <!-- Include the PayPal JavaScript SDK -->
+                    <script
+                        src="https://www.paypal.com/sdk/js?client-id=Af1yvZoY3w3UVeBRsJTIcSua4dGB9614JOHJlf0uCbspTHD2wOMCOiJ-D-9fe3V6pR4YgPIj_XbSAPpV&currency=USD">
+                    </script>
+
+                    <script>
+                       
+                        paypal.Buttons({
+
+                            
+                            createOrder: function (data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: {{ amount }}
+                                        }
+                                    }]
+                                });
+                            },
+
+                          
+                            onApprove: function (data, actions) {
+                                $.ajax({
+                                    url: "http://localhost:8000/orders/",
+                                    type: "POST",
+                                    data: {"payment": true},
+                                    success:function(response){
+                                        window.location.href = "http://localhost:8000/orders/"
+                                    }
+                                })
+                             
+                            }
+
+
+                        }).render('#paypal-button-container');
+                    </script>
+
+                </div>
+
+                <footer class="w3-container w3-blue">
+                    <h5>&copy Professional Cipher</h5>
+                </footer>
+
+            </div>
+        </h3>
+
+    </div>
+
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
