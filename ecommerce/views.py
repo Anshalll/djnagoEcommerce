@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import ProductCat, Product, Users, Cart
+from .models import ProductCat, Product, Users, Cart, Orders
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
@@ -322,6 +322,11 @@ def payment(request):
         zipcode = request.POST.get("zipcode")
         
         
+        request.session['address'] = address
+        request.session['city'] = city
+        request.session['state'] = state
+        request.session['zipcode'] = zipcode
+        
         fetcuser = Users.objects.filter(username = request.session.get("username"))
         fetchuserdata = fetcuser.get()
         fetchCart = Cart.objects.filter(user_assoc = fetchuserdata.id)
@@ -383,8 +388,8 @@ def userorders(request):
             fetchuserdata = fetcuser.get()
             fetchCart = Cart.objects.filter(Q(user_assoc=fetchuserdata.id) & Q(purchased=False))
             fetchCart.create(purchsed = False)
-            
-            
+            Orders.objects.create(username = request.session.get("username"), state = request.session.get("state"), city = request.session.get("city"), zipcode = request.session.get("zipcode"), address = request.session.get("address"))
+            Orders.save()
         return JsonResponse("Order Placed")
             
         

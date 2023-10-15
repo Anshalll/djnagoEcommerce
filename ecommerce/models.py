@@ -47,7 +47,7 @@ class Orders(models.Model):
     city = models.CharField(max_length=500, default=""),
     zipcode =  models.CharField(max_length=500, default="")
     state = models.CharField(max_length=500, default="")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    delivered = models.BooleanField(default= False)
      
     
     
